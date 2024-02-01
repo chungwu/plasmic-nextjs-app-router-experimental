@@ -1,0 +1,60 @@
+{
+  "name": "@plasmicapp/nextjs-app-router-experimental",
+  "version": "1.0.1",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.cjs.js",
+  "module": "./dist/index.esm.js",
+  "files": [
+    "dist"
+  ],
+  "bin": {
+    "with-plasmic-prepass": "./dist/with-plasmic-prepass.cjs.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "scripts": {
+    "build": "yarn build:types && yarn build:index",
+    "build:types": "yarn tsc --emitDeclarationOnly",
+    "build:index": "esbuild --format=cjs --bundle --packages=external --outfile=./dist/index.cjs.js ./src/index.tsx && esbuild --format=esm --bundle --packages=external --outfile=./dist/index.esm.js ./src/index.tsx && esbuild --format=cjs --bundle --packages=external --outfile=./dist/react-server.cjs.js ./src/react-server.ts && esbuild --format=cjs --target=node18 --bundle --outfile=./dist/with-plasmic-prepass.cjs.js --platform=node ./src/with-dev-server.mts",
+    "test": "yarn --cwd=../.. test",
+    "coverage": "yarn --cwd=../.. test --coverage --passWithNoTests",
+    "lint": "eslint",
+    "prepare": "if-env PREPARE_NO_BUILD=true || yarn build"
+  },
+  "dependencies": {
+    "@plasmicapp/prepass": "1.0.14",
+    "fkill": "^8.1.0",
+    "get-port": "^7.0.0",
+    "node-html-parser": "^6.1.5",
+    "yargs": "^17.7.2"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "react-server": {
+        "types": "./dist/react-server.d.ts",
+        "default": "./dist/react-server.cjs.js"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "require": "./dist/index.cjs.js",
+        "import": "./dist/index.esm.js"
+      }
+    }
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.16",
+    "@types/react": "^18.2.51",
+    "@types/yargs": "^17.0.32",
+    "react": "^18.2.0",
+    "typescript": "^5.3.3"
+  }
+}

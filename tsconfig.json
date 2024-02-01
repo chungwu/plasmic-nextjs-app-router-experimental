@@ -1,0 +1,9 @@
+{
+  "extends": "./tsconfig.types.json",
+  "include": ["./src"],
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "NodeNext",
+    "target": "ES2017"
+  }
+}
